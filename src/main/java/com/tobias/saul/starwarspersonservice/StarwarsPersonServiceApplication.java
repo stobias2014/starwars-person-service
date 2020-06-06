@@ -14,7 +14,6 @@ public class StarwarsPersonServiceApplication {
 
 	@Bean
 	public RestTemplate restTemplate() {
-
 		return new RestTemplate();
 	}
 
