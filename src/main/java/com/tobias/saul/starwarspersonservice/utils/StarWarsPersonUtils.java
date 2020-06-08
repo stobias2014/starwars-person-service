@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.tobias.saul.starwarspersonservice.model.Person;
+import com.tobias.saul.starwarspersonservice.model.Planet;
 import com.tobias.saul.starwarspersonservice.web.response.PeopleResponse;
 
 public class StarWarsPersonUtils {
@@ -19,7 +20,7 @@ public class StarWarsPersonUtils {
 
 	public static List<Person> addToPeopleList(ResponseEntity<PeopleResponse> peopleResponse,
 			RestTemplate restTemplate) {
-		
+
 		List<Person> people = new ArrayList<Person>();
 		
 		people.addAll(peopleResponse.getBody().getResults());
@@ -34,6 +35,11 @@ public class StarWarsPersonUtils {
 				people.addAll(peopleResponse.getBody().getResults());
 			}
 		}
+		
+		people.forEach(p -> {
+			Planet homeworld = restTemplate.getForObject((StarWarsPersonUtils.formatUrlToContainHttps(p.getHomeworldLink())), Planet.class);
+			p.setHomeworldPlanet(homeworld);
+		});
 
 		return people;
 	}

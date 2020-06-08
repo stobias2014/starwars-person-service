@@ -15,6 +15,9 @@ public class Person {
 	private String birthYear;
 	@JsonProperty(defaultValue = "unkown")
 	private String gender;
+	@JsonProperty(value = "homeworld")
+	private String homeworldLink;
+	private Planet homeworldPlanet;
 	
 	public String getName() {
 		return name;
@@ -53,68 +56,25 @@ public class Person {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((birthYear == null) ? 0 : birthYear.hashCode());
-		result = prime * result + ((eyeColor == null) ? 0 : eyeColor.hashCode());
-		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
-		result = prime * result + ((hairColor == null) ? 0 : hairColor.hashCode());
-		result = prime * result + ((height == null) ? 0 : height.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
-		return result;
+	public Planet getHomeworldPlanet() {
+		return homeworldPlanet;
 	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Person other = (Person) obj;
-		if (birthYear == null) {
-			if (other.birthYear != null)
-				return false;
-		} else if (!birthYear.equals(other.birthYear))
-			return false;
-		if (eyeColor == null) {
-			if (other.eyeColor != null)
-				return false;
-		} else if (!eyeColor.equals(other.eyeColor))
-			return false;
-		if (gender == null) {
-			if (other.gender != null)
-				return false;
-		} else if (!gender.equals(other.gender))
-			return false;
-		if (hairColor == null) {
-			if (other.hairColor != null)
-				return false;
-		} else if (!hairColor.equals(other.hairColor))
-			return false;
-		if (height == null) {
-			if (other.height != null)
-				return false;
-		} else if (!height.equals(other.height))
-			return false;
-		if (name == null) {
-			if (other.name != null)
-				return false;
-		} else if (!name.equals(other.name))
-			return false;
-		return true;
+	public void setHomeworldPlanet(Planet homeworldPlanet) {
+		this.homeworldPlanet = homeworldPlanet;
 	}
-	
+	public String getHomeworldLink() {
+		return homeworldLink;
+	}
+	public void setHomeworldLink(String homeworldLink) {
+		this.homeworldLink = homeworldLink;
+	}
 	@Override
 	public String toString() {
 		return "Person [name=" + name + ", height=" + height + ", hairColor=" + hairColor + ", eyeColor=" + eyeColor
-				+ ", birthYear=" + birthYear + ", gender=" + gender + "]";
+				+ ", birthYear=" + birthYear + ", gender=" + gender + ", homeworldLink=" + homeworldLink
+				+ ", homeworld=" + homeworldPlanet + "]";
 	}
+		
 	
 	
-
 }
