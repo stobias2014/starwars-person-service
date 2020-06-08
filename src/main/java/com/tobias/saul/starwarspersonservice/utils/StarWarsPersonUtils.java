@@ -24,7 +24,9 @@ public class StarWarsPersonUtils {
 		List<Person> people = new ArrayList<Person>();
 		
 		people.addAll(peopleResponse.getBody().getResults());
-		// keep adding to list until next is null
+		
+		long now = System.currentTimeMillis();
+		
 		while (peopleResponse.getBody().getNext() != null) {
 			if (peopleResponse.getBody().getNext() == null) {
 				continue;
@@ -36,10 +38,16 @@ public class StarWarsPersonUtils {
 			}
 		}
 		
-		people.forEach(p -> {
-			Planet homeworld = restTemplate.getForObject((StarWarsPersonUtils.formatUrlToContainHttps(p.getHomeworldLink())), Planet.class);
-			p.setHomeworldPlanet(homeworld);
+		System.out.println("\nAfter while loop requests -------- > " + ((System.currentTimeMillis() - now) / 1000) + " seconds\n");
+		
+		now = System.currentTimeMillis();
+		
+		people.parallelStream().forEach(p -> {
+			ResponseEntity<Planet> homeworld = restTemplate.getForEntity((StarWarsPersonUtils.formatUrlToContainHttps(p.getHomeworldLink())), Planet.class);
+			p.setHomeworldPlanet(homeworld.getBody());
 		});
+		
+		System.out.println("\nAfter setting planet for person -------- > " + ((System.currentTimeMillis() - now) / 1000) + " seconds\n");
 
 		return people;
 	}
